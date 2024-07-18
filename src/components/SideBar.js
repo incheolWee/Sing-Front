@@ -1,41 +1,45 @@
 import styled from "styled-components";
-import { useNavigate, useLocation } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaUserCircle, FaPlus } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5"
 import { LiaPenNibSolid } from "react-icons/lia";
 import { TfiTrash } from "react-icons/tfi";
 
 const Sidebar = () => {
-    const navigate = useNavigate();
-    return (
-        <Container>
-          <ProfileSection>
-            <FaUserCircle size="50" color="gray" />
-            <ProfileInfo>
-              <Username>신지수 학부생님</Username>
-              <Email>22100417@handong.ac.kr</Email>
-            </ProfileInfo>
-          </ProfileSection>
-          <NavButtons>
-            <BlueButton onClick={() => navigate('/work')}>
-              <FaPlus />
-              새로 만들기
-            </BlueButton>
-            <GreyButton onClick={() => navigate('/home')}>
-            <IoHomeOutline />
-              홈 피드
-            </GreyButton>
-            <GreyButton onClick={() => navigate('/signature')}>
-              <LiaPenNibSolid />
-              내 서명 만들기
-            </GreyButton>
-            <GreyButton onClick={() => navigate('/trash')}>
-              <TfiTrash />
-              휴지통
-            </GreyButton>
-          </NavButtons>
-        </Container>
-    );
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <ProfileSection>
+        <FaUserCircle size="50" color="gray" />
+        <ProfileInfo>
+          <Username>신지수 학부생님</Username>
+          <Email>22100417@handong.ac.kr</Email>
+        </ProfileInfo>
+      </ProfileSection>
+      <NavButtons>
+        <BlueButton onClick={() => navigate('/work')}>
+          <FaPlus />
+          새로 만들기
+        </BlueButton>
+        <GreyButton onClick={() => navigate('/home')}>
+          <IoHomeOutline />
+          홈 피드
+        </GreyButton>
+        <GreyButton onClick={() => navigate('/sign')}>
+          <LiaPenNibSolid />
+          내 서명 만들기
+        </GreyButton>
+        <GreyButton onClick={() => navigate('/trash')}>
+          <TfiTrash />
+          휴지통
+        </GreyButton>
+        <GreyButton onClick={() => navigate('/test')}>
+          <TfiTrash />
+          테스트 페이지
+        </GreyButton>
+      </NavButtons>
+    </Container>
+  );
 };
 
 const Container = styled.div`
