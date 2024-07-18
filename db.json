@@ -1,0 +1,39 @@
+{
+    "posts": [
+        {
+            "id": "1",
+            "title": "Hello World"
+        },
+        {
+            "id": "2",
+            "title": "json-server is awesome"
+        }
+    ],
+    "images": [
+        {
+            "id": "1",
+            "url": "/images/signature1.png",
+            "description": "Signature 1"
+        },
+        {
+            "id": "2",
+            "url": "/images/signature2.png",
+            "description": "Signature 2"
+        },
+        {
+            "id": "3",
+            "url": "/images/signature3.png",
+            "description": "Signature 3"
+        },
+        {
+            "id": "4",
+            "url": "/images/signature4.png",
+            "description": "Signature 4"
+        },
+        {
+            "id": "5",
+            "url": "https://cdn.pixabay.com/photo/2022/11/23/00/54/type-7610939_1280.png",
+            "description": "Signature 5"
+        }
+    ]
+}
