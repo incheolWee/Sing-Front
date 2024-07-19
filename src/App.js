@@ -14,7 +14,6 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/home" element={<HomePage />} />
         <Route path="/work" element={<WorkPage />} />
-
         <Route path="/sign" element={<SignPage />} />
         <Route path="/test" element={<PDFSignatureApp />} />
       </Route>
