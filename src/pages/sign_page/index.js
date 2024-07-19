@@ -3,34 +3,39 @@ import SignatureCanvas from 'react-signature-canvas';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import styled from 'styled-components';
 import Background from "../../components/Background";
-import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import Sidebar from "../../components/SideBar";
+import { FaSave, FaEraser } from 'react-icons/fa'; // 아이콘 추가
 
 const StyledContainer = styled.div`
   text-align: center;
 `;
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px; // 버튼 사이 간격 조절
+`; 
+
+
 const StyledButton = styled.button`
   margin: 10px;
   padding: 10px 20px;
   border: none;
-  background-color: #4CAF50;
+  background-color: #46aae0;
   color: white;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   &:hover {
-    background-color: #45a049;
+    background-color: #0d7ec0;
+  }
+  svg {
+    margin-right: 8px;
   }
 `;
-
 const StyledSignatureCanvas = styled(SignatureCanvas)`
-  border: 2px dashed #000;
+  border: 2px dashed #4CAF50; // 테두리 색상 설정
   background-color: #f0f0f0;
-`;
-
-const MainContent = styled.div`
-  display: flex;
-  height: 100vh;
 `;
 
 const MainArea = styled.div`
@@ -166,16 +171,26 @@ const SignPage = () => {
 
   return (
     <Background>
-
       <MainArea>
         <StyledSignatureCanvas
           ref={sigCanvas}
           penColor='black'
           canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }}
         />
-        <StyledButton onClick={trimSignature}>Trim Signature</StyledButton>
-        <StyledButton onClick={clearSignature}>Clear Signature</StyledButton>
-        <StyledButton onClick={createPdf}>Create PDF with Signature</StyledButton>
+         <StyledButtonContainer>
+          <StyledButton onClick={trimSignature}>
+            <FaSave />
+            저장
+          </StyledButton>
+          <StyledButton onClick={clearSignature}>
+            <FaEraser />
+            지우개
+          </StyledButton>
+          <StyledButton onClick={createPdf}>
+            <FaSave />
+            PDF 생성
+          </StyledButton>
+        </StyledButtonContainer>
         {trimmedDataURL ? (
           <img src={trimmedDataURL} alt='Trimmed signature' style={{ border: '1px solid black', marginTop: '10px' }} />
         ) : null}
