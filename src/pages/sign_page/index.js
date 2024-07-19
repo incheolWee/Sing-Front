@@ -166,41 +166,38 @@ const SignPage = () => {
 
   return (
     <Background>
-      <Header />
-      <MainContent>
-        <Sidebar />
-        <MainArea>
-          <StyledSignatureCanvas
-            ref={sigCanvas}
-            penColor='black'
-            canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }}
-          />
-          <StyledButton onClick={trimSignature}>Trim Signature</StyledButton>
-          <StyledButton onClick={clearSignature}>Clear Signature</StyledButton>
-          <StyledButton onClick={createPdf}>Create PDF with Signature</StyledButton>
-          {trimmedDataURL ? (
-            <img src={trimmedDataURL} alt='Trimmed signature' style={{ border: '1px solid black', marginTop: '10px' }} />
-          ) : null}
-          <FileList>
-            <FileItem>
-              <FileName>Document 1</FileName>
-              <FileDetails>
-                <FileOwner>Owner</FileOwner>
-                <FileDate>Date</FileDate>
-                <FileSize>Size</FileSize>
-              </FileDetails>
-            </FileItem>
-            <FileItem>
-              <FileName>Document 2</FileName>
-              <FileDetails>
-                <FileOwner>Owner</FileOwner>
-                <FileDate>Date</FileDate>
-                <FileSize>Size</FileSize>
-              </FileDetails>
-            </FileItem>
-          </FileList>
-        </MainArea>
-      </MainContent>
+
+      <MainArea>
+        <StyledSignatureCanvas
+          ref={sigCanvas}
+          penColor='black'
+          canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }}
+        />
+        <StyledButton onClick={trimSignature}>Trim Signature</StyledButton>
+        <StyledButton onClick={clearSignature}>Clear Signature</StyledButton>
+        <StyledButton onClick={createPdf}>Create PDF with Signature</StyledButton>
+        {trimmedDataURL ? (
+          <img src={trimmedDataURL} alt='Trimmed signature' style={{ border: '1px solid black', marginTop: '10px' }} />
+        ) : null}
+        <FileList>
+          <FileItem>
+            <FileName>Document 1</FileName>
+            <FileDetails>
+              <FileOwner>Owner</FileOwner>
+              <FileDate>Date</FileDate>
+              <FileSize>Size</FileSize>
+            </FileDetails>
+          </FileItem>
+          <FileItem>
+            <FileName>Document 2</FileName>
+            <FileDetails>
+              <FileOwner>Owner</FileOwner>
+              <FileDate>Date</FileDate>
+              <FileSize>Size</FileSize>
+            </FileDetails>
+          </FileItem>
+        </FileList>
+      </MainArea>
     </Background>
   );
 };
