@@ -7,7 +7,6 @@ import WorkPage from "./pages/work_page";
 import SignPage from "./pages/sign_page";
 import LandingPage from "./pages/landing_page";
 import PDFSignatureApp from "./pages/test_page";
-import LandingPage from "./pages/landing_page";
 
 function App() {
   return (
