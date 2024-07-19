@@ -1,18 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import Background from "../../components/Background";
-import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import Sidebar from "../../components/SideBar";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
     <Background>
-      <Header />
       <MainContent>
-        <Sidebar />
         <MainArea>
           <FileList>
             <FileItem>

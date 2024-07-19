@@ -3,97 +3,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Header from '../../components/Header';
 
-const WorkPageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    position: relative;
-`;
-
-const WorkPageContent = styled.div`
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-`;
-
-const Document = styled.div`
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    overflow: auto;
-    background-color: #f5f5f5;
-    img {
-        max-width: 50%;
-        height: auto;
-    }
-`;
-
-const Sidebar = styled.div`
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-`;
-
-const Button = styled.button`
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #4285f4;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px 0;
-    &:hover {
-        background-color: #357ae8;
-    }
-`;
-
-const Signatures = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
-    justify-content: center;
-    img {
-        width: 80px;
-        height: 80px;
-        margin: 10px 0;
-        cursor: pointer;
-        object-fit: contain;
-    }
-`;
-
-const ExpandButton = styled.button`
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #4285f4;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-        width: 24px;
-        height: 24px;
-    }
-`;
 
 const WorkPage = () => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -158,8 +67,6 @@ const WorkPage = () => {
 
     return (
         <WorkPageContainer onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
-            <Header />
-
             <WorkPageContent>
                 <Document ref={documentRef}>
                     <img src={documentImage} alt='Document' />
@@ -174,7 +81,7 @@ const WorkPage = () => {
                     ))}
                 </Document>
                 {isExpanded && (
-                    <Sidebar>
+                    <SignBar>
                         <Button>파일 저장하기</Button>
                         <Signatures>
                             {signatures.map(signature => (
@@ -187,7 +94,7 @@ const WorkPage = () => {
                             ))}
                         </Signatures>
                         <Button>확인</Button>
-                    </Sidebar>
+                    </SignBar>
                 )}
             </WorkPageContent>
             <ExpandButton onClick={toggleExpand}>
@@ -196,5 +103,98 @@ const WorkPage = () => {
         </WorkPageContainer>
     );
 };
+
+const WorkPageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    /* position: relative; */
+`;
+
+const WorkPageContent = styled.div`
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+`;
+
+const Document = styled.div`
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: auto;
+    background-color: #f5f5f5;
+    img {
+        max-width: 50%;
+        height: auto;
+    }
+`;
+
+const SignBar = styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+`;
+
+const Button = styled.button`
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #4285f4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    &:hover {
+        background-color: #357ae8;
+    }
+`;
+
+const Signatures = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    img {
+        width: 80px;
+        height: 80px;
+        margin: 10px 0;
+        cursor: pointer;
+        object-fit: contain;
+    }
+`;
+
+const ExpandButton = styled.button`
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 24px;
+        height: 24px;
+    }
+`;
 
 export default WorkPage;

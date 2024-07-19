@@ -44,7 +44,8 @@ const Sidebar = () => {
 
 const Container = styled.div`
   background-color: #f9fafa;
-  width: 250px;
+  width: 17%;
+  height: 100vh;
   padding: 20px;
   border-right: 1px solid #ccc;
   display: flex;
