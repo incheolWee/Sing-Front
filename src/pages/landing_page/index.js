@@ -14,7 +14,7 @@ const LandingPage = () => {
 
   return (
     <Background>
-      <Header></Header>
+      <Header/>
       <StyledBody>
         <TextContainer>
           <Title>
