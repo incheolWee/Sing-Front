@@ -12,7 +12,7 @@ const HomePage = () => {
     <Background>
       <Header />
       <MainContent>
-        <Sidebar></Sidebar>
+        <Sidebar />
         <MainArea>
           <FileList>
             <FileItem>
