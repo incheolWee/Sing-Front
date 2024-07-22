@@ -2,7 +2,9 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'; 
 import { GoTriangleDown } from "react-icons/go";
-import { FaUserCircle, FaBell } from "react-icons/fa";
+import { BiSolidBell } from "react-icons/bi";
+import { IoPersonCircleSharp } from "react-icons/io5";
+import { IoIosSearch } from "react-icons/io";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,14 +13,6 @@ const Header = () => {
 
   const handleLogoButtonClick = () => {
     navigate('/');
-  };
-
-  const handleWriteButtonClick = () => {
-    navigate('/write');
-  };
-
-  const handleMyPageButtonClick = () => {
-    navigate('/mypage');
   };
 
   const handleLogoutButtonClick = () => {
@@ -32,16 +26,19 @@ const Header = () => {
       </Logo>
       {location.pathname !== '/' && (
         <>
-          <SearchBar>
-            <input type="text" placeholder="파일 이름을 검색하세요" />
-          </SearchBar>
+          <SearchBarContainer>
+            <SearchBar>
+              <SearchIcon />
+              <SearchInput type="text" placeholder="파일 이름을 검색하세요" />
+            </SearchBar>
+          </SearchBarContainer>
           <HeaderIcons>
             <IconWrapper>
-              <FaBell size="23" color="gray" />
+              <BiSolidBell size="23" />
             </IconWrapper>
             <MyPageBNT onClick={() => {setView(!view)}}>
-              <FaUserCircle size="40" color="gray" />
-              <GoTriangleDown size="20" color="#ECECEC" />
+              <IoPersonCircleSharp size="40" />
+              <GoTriangleDown size="20" />
             </MyPageBNT>
           </HeaderIcons>
         </>
@@ -68,19 +65,32 @@ const Logo = styled.div`
   cursor: pointer;
 `;
 
-const SearchBar = styled.div`
+const SearchBarContainer = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 0 20px;
+`;
 
-  input {
-    width: 100%;
-    max-width: 500px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
+const SearchBar = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+`;
+
+const SearchIcon = styled(IoIosSearch)`
+  position: absolute;
+  left: 10px; /* 아이콘과 텍스트 간의 간격 */
+  color: #ccc;
+  font-size: 20px;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 10px 10px 10px 40px; /* 아이콘 위치를 고려한 왼쪽 패딩 */
+  border: 1px solid #ccc;
+  border-radius: 10px;
 `;
 
 const HeaderIcons = styled.div`
@@ -91,6 +101,7 @@ const HeaderIcons = styled.div`
 const IconWrapper = styled.div`
   margin-right: 25px;
   position: relative;
+  color: gray;  // 여기서 기본 아이콘 색상 설정
 
   svg {
     transition: fill 0.3s ease;
@@ -118,6 +129,15 @@ const MyPageBNT = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: gray;  // 여기서 기본 아이콘 색상 설정
+
+  svg {
+    transition: fill 0.3s ease;
+  }
+
+  &:hover svg {
+    fill: black;
+  }
 `;
 
 export default Header;

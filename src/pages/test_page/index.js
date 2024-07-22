@@ -133,7 +133,6 @@ const PDFSignatureApp = () => {
     };
 
     return (
-
         <div>
             <input type="file" onChange={onFileChange} accept="application/pdf" />
             <canvas ref={pdfCanvasRef} />
