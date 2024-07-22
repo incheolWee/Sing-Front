@@ -37,7 +37,7 @@ const Header = () => {
               <BiSolidBell size="23" />
             </IconWrapper>
             <MyPageBNT onClick={() => {setView(!view)}}>
-              <IoPersonCircleSharp size="40" />
+              <IoPersonCircleSharp size="35" color="#D6D5D5"/>
               <GoTriangleDown size="20" />
             </MyPageBNT>
           </HeaderIcons>
@@ -129,7 +129,7 @@ const MyPageBNT = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  color: gray;  // 여기서 기본 아이콘 색상 설정
+  color: "#D6D5D5";  // 여기서 기본 아이콘 색상 설정
 
   svg {
     transition: fill 0.3s ease;
