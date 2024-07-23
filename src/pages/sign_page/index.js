@@ -1,204 +1,332 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import styled from 'styled-components';
-import Background from "../../components/Background";
-import Header from "../../components/Header";
-import { useNavigate } from 'react-router-dom';
-import Sidebar from "../../components/SideBar";
+import { LuEraser } from "react-icons/lu";
+import { RxBorderWidth } from "react-icons/rx";
+import { GrPowerReset } from "react-icons/gr";
+import { FiPlus } from "react-icons/fi";
 
-const StyledContainer = styled.div`
-  text-align: center;
-`;
-
-const StyledButton = styled.button`
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #45a049;
-  }
-`;
-
-const StyledSignatureCanvas = styled(SignatureCanvas)`
-  border: 2px dashed #000;
-  background-color: #f0f0f0;
-`;
-
-const MainContent = styled.div`
+const Container = styled.div`
   display: flex;
-  height: 100vh;
+  padding: 20px;
+  background-color: #fff;
 `;
 
 const MainArea = styled.div`
   flex-grow: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #fafafa;
+  padding: 20px;
   border-radius: 8px;
+  background-color: #fafafa;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
-const FileList = styled.div`
+const Header = styled.h1`
+  font-size: 24px;
+  margin-bottom: 10px;
+`;
+
+const SubHeader = styled.p`
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+`;
+
+const SignatureContainer = styled.div`
+  position: relative;
+  width: 700px;
+  height: 350px;
+  border-radius: 16px;
+  background-color: #f5efe4;
+  margin-bottom: 20px;
+`;
+
+const StyledSignatureCanvas = styled(SignatureCanvas)`
   width: 100%;
-  max-width: 600px;
-  margin-top: 20px;
+  height: 100%;
+  border-radius: 16px;
+`;
+
+const ToolContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const ToolButton = styled.button`
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: ${({ isActive }) => (isActive ? '#ffffff' : 'transparent')};
+  color: black;
+  cursor: pointer;
+  &:hover {
+    color: #666;
+  }
+  svg {
+    font-size: 24px;
+  }
+`;
+
+const Dropdown = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+`;
+
+const DropdownItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+const CircleIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${({ color }) => color};
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+const BlueButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border: 1px solid #00A3FF;
+  border-radius: 5px;
+  background-color: #00A3FF;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #008ddf;
+  }
+  svg {
+    font-size: 20px;
+  }
+`;
+
+const WhiteButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+  border: 1px solid #00A3FF;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #00A3FF;
+  cursor: pointer;
+  &:hover {
+    background-color: #e7f6ff;
+  }
+  svg {
+    font-size: 20px;
+  }
+`;
+
+const SideArea = styled.div`
+  width: 200px;
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
-const FileItem = styled.div`
+const SignatureList = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const SignatureItem = styled.div`
+  width: 100%;
+  height: 60px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   &:hover {
     background-color: #f9f9f9;
   }
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
 `;
-
-const FileName = styled.div`
-  font-weight: bold;
-  color: #333;
-`;
-
-const FileDetails = styled.div`
-  display: flex;
-  gap: 15px;
-  font-size: 14px;
-  color: #666;
-`;
-
-const FileOwner = styled.div``;
-
-const FileDate = styled.div``;
-
-const FileSize = styled.div``;
 
 const SignPage = () => {
   const sigCanvas = useRef({});
-  const [trimmedDataURL, setTrimmedDataURL] = useState(null);
+  const [savedSignatures, setSavedSignatures] = useState([]);
+  const [penColor, setPenColor] = useState('black');
+  const [penWidth, setPenWidth] = useState(2);
+  const [isEraser, setIsEraser] = useState(false);
+  const [showWidthDropdown, setShowWidthDropdown] = useState(false);
+  const [showColorDropdown, setShowColorDropdown] = useState(false);
 
-  const createPdf = async () => {
-    const signatureDataUrl = trimmedDataURL;
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        !event.target.closest('.dropdown') &&
+        !event.target.closest('.tool-button')
+      ) {
+        setShowWidthDropdown(false);
+        setShowColorDropdown(false);
+      }
+    };
 
-    if (!signatureDataUrl) {
-      alert('Please provide a signature first.');
-      return;
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (sigCanvas.current) {
+      sigCanvas.current.penColor = isEraser ? 'white' : penColor;
+      sigCanvas.current.penWidth = isEraser ? 10 : penWidth;
     }
-
-    // Create a new PDFDocument
-    const pdfDoc = await PDFDocument.create();
-
-    // Add a blank page
-    const page = pdfDoc.addPage([600, 400]);
-
-    // Draw some text on the page
-    const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    page.drawText('This is a signed document.', {
-      x: 50,
-      y: 350,
-      size: 24,
-      font: helveticaFont,
-      color: rgb(0, 0, 0),
-    });
-
-    // Add the signature image
-    const pngImageBytes = await fetch(signatureDataUrl).then(res => res.arrayBuffer());
-    const pngImage = await pdfDoc.embedPng(pngImageBytes);
-    const pngDims = pngImage.scale(0.5);
-
-    page.drawImage(pngImage, {
-      x: 50,
-      y: 50,
-      width: pngDims.width,
-      height: pngDims.height,
-    });
-
-    // Serialize the PDFDocument to bytes (a Uint8Array)
-    const pdfBytes = await pdfDoc.save();
-
-    // Convert the bytes to a Blob and create a URL
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-
-    // Create an anchor element and trigger a download
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'signed_document.pdf';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
+  }, [penColor, penWidth, isEraser]);
 
   const clearSignature = () => {
     sigCanvas.current.clear();
-    setTrimmedDataURL(null);
   };
 
-  const trimSignature = () => {
-    const canvas = sigCanvas.current.getTrimmedCanvas();
-    const ctx = canvas.getContext('2d');
-    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const saveSignature = () => {
+    const signature = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
+    setSavedSignatures([...savedSignatures, signature]);
+    const link = document.createElement('a');
+    link.href = signature;
+    link.download = 'signature.png';
+    link.click();
+    sigCanvas.current.clear();
+  };
 
-    // Iterate over all pixels and make white pixels transparent
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      if (imgData.data[i] === 255 && imgData.data[i + 1] === 255 && imgData.data[i + 2] === 255) {
-        imgData.data[i + 3] = 0;
-      }
+  const toggleEraser = () => {
+    setIsEraser(!isEraser);
+  };
+
+  const changePenColor = (color) => {
+    setPenColor(color);
+    setShowColorDropdown(false);
+  };
+
+  const changePenWidth = (width) => {
+    setPenWidth(width);
+    setShowWidthDropdown(false);
+  };
+
+  const toggleWidthDropdown = () => {
+    setShowWidthDropdown(!showWidthDropdown);
+    if (showColorDropdown) {
+      setShowColorDropdown(false);
     }
-    ctx.putImageData(imgData, 0, 0);
+  };
 
-    setTrimmedDataURL(canvas.toDataURL('image/png'));
+  const toggleColorDropdown = () => {
+    setShowColorDropdown(!showColorDropdown);
+    if (showWidthDropdown) {
+      setShowWidthDropdown(false);
+    }
   };
 
   return (
-    <Background>
-
+    <Container>
       <MainArea>
-        <StyledSignatureCanvas
-          ref={sigCanvas}
-          penColor='black'
-          canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }}
-        />
-        <StyledButton onClick={trimSignature}>Trim Signature</StyledButton>
-        <StyledButton onClick={clearSignature}>Clear Signature</StyledButton>
-        <StyledButton onClick={createPdf}>Create PDF with Signature</StyledButton>
-        {trimmedDataURL ? (
-          <img src={trimmedDataURL} alt='Trimmed signature' style={{ border: '1px solid black', marginTop: '10px' }} />
-        ) : null}
-        <FileList>
-          <FileItem>
-            <FileName>Document 1</FileName>
-            <FileDetails>
-              <FileOwner>Owner</FileOwner>
-              <FileDate>Date</FileDate>
-              <FileSize>Size</FileSize>
-            </FileDetails>
-          </FileItem>
-          <FileItem>
-            <FileName>Document 2</FileName>
-            <FileDetails>
-              <FileOwner>Owner</FileOwner>
-              <FileDate>Date</FileDate>
-              <FileSize>Size</FileSize>
-            </FileDetails>
-          </FileItem>
-        </FileList>
+        <Header>내 서명 만들기</Header>
+        <SubHeader>나만의 서명을 만들어 등록하고 빠르고 간편하게 문서에 사인을 하세요.</SubHeader>
+        <SignatureContainer>
+          <StyledSignatureCanvas
+            ref={sigCanvas}
+            penColor={penColor}
+            
+            canvasProps={{ width: 700, height: 350, className: 'sigCanvas' }}
+          />
+          <ToolContainer>
+            <ToolButton
+              isActive={isEraser}
+              onClick={toggleEraser}
+              className="tool-button"
+            >
+              <LuEraser />
+            </ToolButton>
+            <ToolButton
+              onClick={toggleWidthDropdown}
+              className="tool-button"
+            >
+              <RxBorderWidth />
+            </ToolButton>
+            {showWidthDropdown && (
+              <Dropdown className="dropdown">
+                <DropdownItem onClick={() => changePenWidth(2)}>얇게</DropdownItem>
+                <DropdownItem onClick={() => changePenWidth(5)}>중간</DropdownItem>
+                <DropdownItem onClick={() => changePenWidth(10)}>두껍게</DropdownItem>
+              </Dropdown>
+            )}
+            <ToolButton
+              onClick={toggleColorDropdown}
+              className="tool-button"
+            >
+              <CircleIcon color={penColor} />
+            </ToolButton>
+            {showColorDropdown && (
+              <Dropdown className="dropdown">
+                <DropdownItem onClick={() => changePenColor('black')}>
+                  <CircleIcon color="black" />
+                </DropdownItem>
+                <DropdownItem onClick={() => changePenColor('blue')}>
+                  <CircleIcon color="blue" />
+                </DropdownItem>
+                <DropdownItem onClick={() => changePenColor('red')}>
+                  <CircleIcon color="red" />
+                </DropdownItem>
+              </Dropdown>
+            )}
+          </ToolContainer>
+        </SignatureContainer>
+        <ButtonContainer>
+          <WhiteButton onClick={clearSignature}>
+            <GrPowerReset />
+            다시 서명하기
+          </WhiteButton>
+          <BlueButton onClick={saveSignature}>
+            <FiPlus />
+            서명 등록하기
+          </BlueButton>
+        </ButtonContainer>
       </MainArea>
-    </Background>
+      <SideArea>
+        <SignatureList>
+          {savedSignatures.map((signature, index) => (
+            <SignatureItem key={index}>
+              <img src={signature} alt={`signature-${index}`} />
+            </SignatureItem>
+          ))}
+        </SignatureList>
+      </SideArea>
+    </Container>
   );
 };
 
