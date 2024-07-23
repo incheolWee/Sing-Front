@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import Background from '../../components/Background';
 
 const PDFSignatureApp = () => {
     // PDF 파일 상태를 저장하기 위한 state
@@ -171,37 +172,39 @@ const PDFSignatureApp = () => {
     };
 
     return (
-        <div>
-            <input type="file" onChange={onFileChange} accept="application/pdf" />
-            <div style={{ position: 'relative', border: '1px solid black', display: 'inline-block', overflow: 'auto' }}>
-                <canvas
-                    ref={pdfCanvasRef}
-                    onClick={handlePDFClick}
-                    style={{ border: '1px solid red', display: 'block' }}
-                />
-                <div style={{ position: 'absolute', top: 0, left: 0, padding: '5px', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '5px' }}>
-                    PDF 좌표: (X: {pdfCoordinates.x}, Y: {pdfCoordinates.y})<br />
-                    PDF 크기: (Width: {pdfSize.width}, Height: {pdfSize.height})
+        <Background>
+            <div>
+                <input type="file" onChange={onFileChange} accept="application/pdf" />
+                <div style={{ position: 'relative', border: '1px solid black', display: 'inline-block', overflow: 'auto' }}>
+                    <canvas
+                        ref={pdfCanvasRef}
+                        onClick={handlePDFClick}
+                        style={{ border: '1px solid red', display: 'block' }}
+                    />
+                    <div style={{ position: 'absolute', top: 0, left: 0, padding: '5px', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '5px' }}>
+                        PDF 좌표: (X: {pdfCoordinates.x}, Y: {pdfCoordinates.y})<br />
+                        PDF 크기: (Width: {pdfSize.width}, Height: {pdfSize.height})
+                    </div>
                 </div>
-            </div>
 
-            <p>
-                페이지 {pageNumber} / {numPages}
-            </p>
-            <canvas
-                ref={canvasRef}
-                width={500}
-                height={200}
-                style={{ border: '1px solid black' }}
-                onMouseDown={startDrawing}
-                onMouseUp={stopDrawing}
-                onMouseMove={draw}
-                onMouseOut={stopDrawing}
-            />
-            <br />
-            <button onClick={clearSignature}>서명 지우기</button>
-            <button onClick={handleAddSignatureClick}>PDF에 서명 추가</button>
-        </div>
+                <p>
+                    페이지 {pageNumber} / {numPages}
+                </p>
+                <canvas
+                    ref={canvasRef}
+                    width={500}
+                    height={200}
+                    style={{ border: '1px solid black' }}
+                    onMouseDown={startDrawing}
+                    onMouseUp={stopDrawing}
+                    onMouseMove={draw}
+                    onMouseOut={stopDrawing}
+                />
+                <br />
+                <button onClick={clearSignature}>서명 지우기</button>
+                <button onClick={handleAddSignatureClick}>PDF에 서명 추가</button>
+            </div>
+        </Background>
     );
 };
 
