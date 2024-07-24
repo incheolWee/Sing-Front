@@ -5,6 +5,7 @@ import { LuEraser } from "react-icons/lu";
 import { RxBorderWidth } from "react-icons/rx";
 import { GrPowerReset } from "react-icons/gr";
 import { FiPlus } from "react-icons/fi";
+import Background from '../../components/Background';
 
 const Container = styled.div`
   display: flex;
@@ -253,6 +254,7 @@ const SignPage = () => {
   };
 
   return (
+    <Background>
     <Container>
       <MainArea>
         <Header>내 서명 만들기</Header>
@@ -327,6 +329,7 @@ const SignPage = () => {
         </SignatureList>
       </SideArea>
     </Container>
+    </Background>
   );
 };
 
