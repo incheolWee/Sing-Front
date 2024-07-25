@@ -55,6 +55,13 @@ const Sidebar = () => {
           <TfiTrash />
           테스트 페이지
         </Button>
+        <Button
+          onClick={() => navigate('/pdf')}
+          selected={location.pathname === '/pdf'}
+        >
+          <TfiTrash />
+          코드 분석후 테스트
+        </Button>
       </NavButtons>
     </Container>
   );
