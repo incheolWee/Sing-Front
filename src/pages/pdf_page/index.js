@@ -23,7 +23,7 @@ function downloadURI(uri, name) {
     document.body.removeChild(link);
 }
 
-function App() {
+function PDFPage() {
     const styles = {
         container: {
             maxWidth: 900,
@@ -279,4 +279,4 @@ function App() {
     );
 }
 
-export default App;
+export default PDFPage;
