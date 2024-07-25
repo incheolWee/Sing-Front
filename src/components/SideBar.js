@@ -12,7 +12,7 @@ const Sidebar = () => {
   return (
     <Container>
       <ProfileSection>
-        <FaUserCircle size="50" color="gray" />
+       <FaUserCircle size="50" color="#D6D5D5" />
         <ProfileInfo>
           <Username>신지수 학부생님</Username>
           <Email>22100417@handong.ac.kr</Email>
@@ -116,7 +116,7 @@ const BlueButton = styled.button`
   text-align: left;
 
   ${({ selected }) => selected && `
-    background-color: #004081;
+    
   `}
 
   &:hover {

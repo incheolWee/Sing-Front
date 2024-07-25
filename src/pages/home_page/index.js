@@ -1,39 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Background from "../../components/Background";
-import { useNavigate } from 'react-router-dom';
 import Body from "../../components/Body";
+import { HiDotsVertical } from "react-icons/hi";
+import { FaRegCheckSquare } from "react-icons/fa";
 
 const HomePage = () => {
-  const navigate = useNavigate();
+  const PdfLogo = '/pdf-logo.png';
+  const [showCheckboxes, setShowCheckboxes] = useState(false);
+
+  const toggleCheckboxes = () => {
+    setShowCheckboxes(!showCheckboxes);
+  };
 
   return (
     <Background>
       <Body>
-        <Title>
-        홈
-        </Title>
+        <Title>홈</Title>
         <Navigation>
           <NavItem active>내 파일</NavItem>
           <NavItem>공유</NavItem>
+          <ChoiceButton onClick={toggleCheckboxes}>
+            <FaRegCheckSquare />
+            <span>편집</span>
+          </ChoiceButton>
         </Navigation>
         <MainArea>
           <FileListHeader>
-            <HeaderItem>이름</HeaderItem>
-            <HeaderItem>열어 본 날짜</HeaderItem>
-            <HeaderItem>소유자</HeaderItem>
-            <HeaderItem>크기</HeaderItem>
+            <HeaderItem style={{ flex: 6 }}>이름</HeaderItem>
+            <HeaderItem style={{ flex: 0.8 }}>소유자</HeaderItem>
+            <HeaderItem style={{ flex: 1.14 }}>열어 본 날짜</HeaderItem>
+            <HeaderItem style={{ flex: 0.7 }}>크기</HeaderItem>
+            <HeaderItem style={{ flex: 0.2 }}></HeaderItem>
           </FileListHeader>
           <FileList>
             {Array.from({ length: 4 }).map((_, index) => (
               <FileItem key={index}>
-                <FileIcon>📑</FileIcon>
-                <FileName>근로계약서.pdf</FileName>
-                <FileDetails>
-                  <FileDate>2025. 05. 11. 12:28</FileDate>
-                  <FileOwner>나</FileOwner>
-                  <FileSize>224KB</FileSize>
-                </FileDetails>
+                {showCheckboxes && <Checkbox type="checkbox" />}
+                <FileName>
+                  <PdfImage src={PdfLogo} alt='pdf' />
+                  근로계약서.pdf
+                </FileName>
+                <FileOwner>나</FileOwner>
+                <FileDate>2025. 05. 11. 12:28</FileDate>
+                <FileSize>224KB</FileSize>
+                <MenuIconWrapper>
+                  <HiDotsVertical color="#b0b0b0" />
+                </MenuIconWrapper>
               </FileItem>
             ))}
           </FileList>
@@ -43,14 +56,28 @@ const HomePage = () => {
   );
 };
 
+const ChoiceButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: black;
+  margin-left: auto; /* 자동으로 오른쪽으로 이동 */
+`;
+
 const Title = styled.div`
   font-size: 28px;
-  font-weight: 600;
-  padding-bottom: 20px;
+  font-weight: 700;
+  padding-bottom: 30px;
 `;
 
 const Navigation = styled.div`
   display: flex;
+  align-items: center;
   gap: 20px;
   margin-bottom: 20px;
 `;
@@ -72,7 +99,6 @@ const MainArea = styled.div`
 
 const FileListHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   padding: 10px 0;
   font-weight: bold;
   border-bottom: 1px solid #ccc;
@@ -80,7 +106,7 @@ const FileListHeader = styled.div`
 
 const HeaderItem = styled.div`
   flex: 1;
-  text-align: center;
+  text-align: left;
 `;
 
 const FileList = styled.div`
@@ -92,37 +118,54 @@ const FileList = styled.div`
 
 const FileItem = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Center items vertically */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
 `;
 
-const FileIcon = styled.div`
-  flex: 0 0 50px;
-  font-size: 24px;
-  text-align: center;
+const Checkbox = styled.input`
+  margin-right: 10px;
 `;
 
 const FileName = styled.div`
-  flex: 2;
+  flex: 6;
   font-weight: bold;
-`;
-
-const FileDetails = styled.div`
-  flex: 3;
   display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: gray;
+  align-items: center;
+  gap: 10px; /* Adjust gap between image and text */
 `;
 
-const FileOwner = styled.div``;
+const PdfImage = styled.img`
+  width: 20px; /* Adjust width as needed */
+  height: 26px; /* Adjust height as needed */
+  padding: 1px; /* Adjust padding as needed */
+`;
 
-const FileDate = styled.div``;
+const FileOwner = styled.div`
+  flex: 0.6;
+  color: gray;
+  text-align: left;
+`;
 
-const FileSize = styled.div``;
+const FileDate = styled.div`
+  flex: 1.2;
+  color: gray;
+  text-align: left;
+`;
+
+const FileSize = styled.div`
+  flex: 0.68;
+  color: gray;
+  text-align: left;
+`;
+
+const MenuIconWrapper = styled.div`
+  flex: 0.2;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+`;
 
 export default HomePage;
