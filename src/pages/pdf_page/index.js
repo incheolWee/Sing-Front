@@ -12,8 +12,10 @@ import DraggableSignature from "./components/DraggableSignature";
 import DraggableText from "./components/DraggableText";
 import dayjs from "dayjs";
 
+//PDF.js 라리브러리 워커 파일 경로 설정
 pdfjs.GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdf.worker.mjs`;
 
+//파일 다운로드하기 위한 함수
 function downloadURI(uri, name) {
     var link = document.createElement("a");
     link.download = name;
@@ -22,6 +24,7 @@ function downloadURI(uri, name) {
     link.click();
     document.body.removeChild(link);
 }
+
 
 function PDFPage() {
     const styles = {
