@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom'; 
-import { GoTriangleDown } from "react-icons/go";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { BiSolidBell } from "react-icons/bi";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,8 +17,25 @@ const Header = () => {
   };
 
   const handleLogoutButtonClick = () => {
-    // 로그아웃
+    // Add logout functionality here
   };
+
+  const handleProfileClick = () => {
+    setView(!view);
+  };
+
+  const handleClickOutside = (event) => {
+    if (!event.target.closest('.profile-dropdown') && view) {
+      setView(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [view]);
 
   return (
     <HeaderContainer>
@@ -34,12 +52,21 @@ const Header = () => {
           </SearchBarContainer>
           <HeaderIcons>
             <IconWrapper>
-              <BiSolidBell size="23" />
+              <BiSolidBell size="2" color="#D6D5D5" />
             </IconWrapper>
-            <MyPageBNT onClick={() => {setView(!view)}}>
-              <IoPersonCircleSharp size="35" color="#D6D5D5"/>
-              <GoTriangleDown size="20" />
-            </MyPageBNT>
+            <ProfileWrapper>
+              <MyPageBNT onClick={handleProfileClick} className="profile-dropdown">
+                <IoPersonCircleSharp size="35" color="#D6D5D5" />
+                {view ? <GoTriangleUp size="20" color="#D6D5D5" /> : <GoTriangleDown size="20" color="#D6D5D5" />}
+              </MyPageBNT>
+              {view && (
+                <DropdownMenu className="profile-dropdown">
+                  <DropdownItem onClick={handleLogoutButtonClick}>
+                    <FiLogOut />
+                    </DropdownItem>
+                </DropdownMenu>
+              )}
+            </ProfileWrapper>
           </HeaderIcons>
         </>
       )}
@@ -116,13 +143,17 @@ const IconWrapper = styled.div`
       right: -10px;
       bottom: -10px;
       border-radius: 50%;
-      background-color: rgba(102, 102, 102, 0.2);
+      background-color: "#848484";
     }
 
     svg {
-      fill: black;
+      fill: gray;
     }
   }
+`;
+
+const ProfileWrapper = styled.div`
+  position: relative;
 `;
 
 const MyPageBNT = styled.div`
@@ -136,7 +167,27 @@ const MyPageBNT = styled.div`
   }
 
   &:hover svg {
-    fill: black;
+    fill: gray;
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+`;
+
+const DropdownItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
   }
 `;
 

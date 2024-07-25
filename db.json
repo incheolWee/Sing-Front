@@ -35,5 +35,21 @@
             "url": "https://cdn.pixabay.com/photo/2022/11/23/00/54/type-7610939_1280.png",
             "description": "Signature 5"
         }
+    ],
+    "PDF": [
+        {
+            "id": "1",
+            "url": "https://karf.or.kr/wp-content/uploads/2022/03/Download_Sample.pdf",
+            "name": "근로계약서.pdf",
+            "date": "2024.07.23 11:20",
+            "size": "224KB"
+        },
+        {
+            "id": "2",
+            "url": "https://seoul.intercontinental.com/upload/file/commonfilelang/15/800.pdf",
+            "name": "비즈플로우 개인정보동의서.pdf",
+            "date": "2024.07.23 11:20",
+            "size": "309KB"
+        }
     ]
 }
