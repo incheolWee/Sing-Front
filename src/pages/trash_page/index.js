@@ -3,40 +3,29 @@ import styled from "styled-components";
 import Background from "../../components/Background";
 import Body from "../../components/Body";
 import { HiDotsVertical } from "react-icons/hi";
-import { FaRegCheckSquare } from "react-icons/fa";
-import { useEffect, useRef } from 'react';
-import axios from 'axios';
+import { IoTrashOutline } from "react-icons/io5";
 
-
-const HomePage = () => {
+const TrashPage = () => {
   const PdfLogo = '/pdf-logo.png';
   const [showCheckboxes, setShowCheckboxes] = useState(false);
-  const [signatures, setSignatures] = useState([]);
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
 
   const toggleCheckboxes = () => {
     setShowCheckboxes(!showCheckboxes);
+    setIsDeleteClicked(!isDeleteClicked); // Toggle the delete clicked state
   };
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/pdf")
-        .then(response => {
-            setSignatures(response.data);
-        })
-        .catch(error => {
-            console.error("There was an error fetching the images!", error);
-        });
-  }, []);
 
   return (
     <Background>
       <Body>
-        <Title>홈</Title>
+        <Title>휴지통</Title>
+        <Desc>휴지통에 있는 항목은 30일 후 완전히 삭제됩니다.</Desc>
         <Navigation>
           <NavItem active>내 파일</NavItem>
           <NavItem>공유</NavItem>
-          <ChoiceButton onClick={toggleCheckboxes}>
-            <FaRegCheckSquare />
-            <span>편집</span>
+          <ChoiceButton onClick={toggleCheckboxes} isClicked={isDeleteClicked}>
+            <IoTrashOutline />
+            <span>삭제</span>
           </ChoiceButton>
         </Navigation>
         <MainArea>
@@ -76,17 +65,25 @@ const ChoiceButton = styled.button`
   gap: 5px;
   font-size: 18px;
   cursor: pointer;
-  background: none;
+  background: ${({ isClicked }) => (isClicked ? '#d2d2d2' : 'none')}; // Background color toggles
+  border-radius: 6px;
   border: none;
   padding: 0;
   color: black;
-  margin-left: auto; /* 자동으로 오른쪽으로 이동 */
+  margin-left: auto;
 `;
 
 const Title = styled.div`
   font-size: 28px;
   font-weight: 700;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
+`;
+
+const Desc = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  color: gray;
+  padding-bottom: 20px;
 `;
 
 const Navigation = styled.div`
@@ -182,4 +179,4 @@ const MenuIconWrapper = styled.div`
   align-items: center; /* Center vertically */
 `;
 
-export default HomePage;
+export default TrashPage;

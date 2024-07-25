@@ -149,7 +149,7 @@ const Button = styled.button`
   text-align: left;
 
   &:hover {
-    background-color: #acacac;
+    background-color: #E7E8E8;
   }
 
   & > svg {

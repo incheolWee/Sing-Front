@@ -13,7 +13,7 @@ const Header = () => {
   const [view, setView] = useState(false);
 
   const handleLogoButtonClick = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   const handleLogoutButtonClick = () => {
@@ -52,7 +52,7 @@ const Header = () => {
           </SearchBarContainer>
           <HeaderIcons>
             <IconWrapper>
-              <BiSolidBell size="2" color="#D6D5D5" />
+              <BiSolidBell size="30" color="#D6D5D5" />
             </IconWrapper>
             <ProfileWrapper>
               <MyPageBNT onClick={handleProfileClick} className="profile-dropdown">
@@ -126,7 +126,7 @@ const HeaderIcons = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  margin-right: 25px;
+  margin-right: 20px;
   position: relative;
   color: gray;  // 여기서 기본 아이콘 색상 설정
 

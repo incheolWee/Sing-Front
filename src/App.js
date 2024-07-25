@@ -8,6 +8,7 @@ import SignPage from "./pages/sign_page";
 import LandingPage from "./pages/landing_page";
 import PDFSignatureApp from "./pages/test_page";
 import PDFPage from "./pages/pdf_page";
+import TrashPage from "./pages/trash_page";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/sign" element={<SignPage />} />
         <Route path="/test" element={<PDFSignatureApp />} />
         <Route path="/pdf" element={<PDFPage />} />
+        <Route path="/trash" element={<TrashPage />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
     </Routes >
