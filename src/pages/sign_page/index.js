@@ -254,80 +254,82 @@ const SignPage = () => {
   };
 
   return (
-    <Container>
-      <MainArea>
-        <Header>내 서명 만들기</Header>
-        <SubHeader>나만의 서명을 만들어 등록하고 빠르고 간편하게 문서에 사인을 하세요.</SubHeader>
-        <SignatureContainer>
-          <StyledSignatureCanvas
-            ref={sigCanvas}
-            penColor={penColor}
+    <Background >
+      <Container>
+        <MainArea>
+          <Header>내 서명 만들기</Header>
+          <SubHeader>나만의 서명을 만들어 등록하고 빠르고 간편하게 문서에 사인을 하세요.</SubHeader>
+          <SignatureContainer>
+            <StyledSignatureCanvas
+              ref={sigCanvas}
+              penColor={penColor}
 
-            canvasProps={{ width: 700, height: 350, className: 'sigCanvas' }}
-          />
-          <ToolContainer>
-            <ToolButton
-              isActive={isEraser}
-              onClick={toggleEraser}
-              className="tool-button"
-            >
-              <LuEraser />
-            </ToolButton>
-            <ToolButton
-              onClick={toggleWidthDropdown}
-              className="tool-button"
-            >
-              <RxBorderWidth />
-            </ToolButton>
-            {showWidthDropdown && (
-              <Dropdown className="dropdown">
-                <DropdownItem onClick={() => changePenWidth(2)}>얇게</DropdownItem>
-                <DropdownItem onClick={() => changePenWidth(5)}>중간</DropdownItem>
-                <DropdownItem onClick={() => changePenWidth(10)}>두껍게</DropdownItem>
-              </Dropdown>
-            )}
-            <ToolButton
-              onClick={toggleColorDropdown}
-              className="tool-button"
-            >
-              <CircleIcon color={penColor} />
-            </ToolButton>
-            {showColorDropdown && (
-              <Dropdown className="dropdown">
-                <DropdownItem onClick={() => changePenColor('black')}>
-                  <CircleIcon color="black" />
-                </DropdownItem>
-                <DropdownItem onClick={() => changePenColor('blue')}>
-                  <CircleIcon color="blue" />
-                </DropdownItem>
-                <DropdownItem onClick={() => changePenColor('red')}>
-                  <CircleIcon color="red" />
-                </DropdownItem>
-              </Dropdown>
-            )}
-          </ToolContainer>
-        </SignatureContainer>
-        <ButtonContainer>
-          <WhiteButton onClick={clearSignature}>
-            <GrPowerReset />
-            다시 서명하기
-          </WhiteButton>
-          <BlueButton onClick={saveSignature}>
-            <FiPlus />
-            서명 등록하기
-          </BlueButton>
-        </ButtonContainer>
-      </MainArea>
-      <SideArea>
-        <SignatureList>
-          {savedSignatures.map((signature, index) => (
-            <SignatureItem key={index}>
-              <img src={signature} alt={`signature-${index}`} />
-            </SignatureItem>
-          ))}
-        </SignatureList>
-      </SideArea>
-    </Container>
+              canvasProps={{ width: 700, height: 350, className: 'sigCanvas' }}
+            />
+            <ToolContainer>
+              <ToolButton
+                isActive={isEraser}
+                onClick={toggleEraser}
+                className="tool-button"
+              >
+                <LuEraser />
+              </ToolButton>
+              <ToolButton
+                onClick={toggleWidthDropdown}
+                className="tool-button"
+              >
+                <RxBorderWidth />
+              </ToolButton>
+              {showWidthDropdown && (
+                <Dropdown className="dropdown">
+                  <DropdownItem onClick={() => changePenWidth(2)}>얇게</DropdownItem>
+                  <DropdownItem onClick={() => changePenWidth(5)}>중간</DropdownItem>
+                  <DropdownItem onClick={() => changePenWidth(10)}>두껍게</DropdownItem>
+                </Dropdown>
+              )}
+              <ToolButton
+                onClick={toggleColorDropdown}
+                className="tool-button"
+              >
+                <CircleIcon color={penColor} />
+              </ToolButton>
+              {showColorDropdown && (
+                <Dropdown className="dropdown">
+                  <DropdownItem onClick={() => changePenColor('black')}>
+                    <CircleIcon color="black" />
+                  </DropdownItem>
+                  <DropdownItem onClick={() => changePenColor('blue')}>
+                    <CircleIcon color="blue" />
+                  </DropdownItem>
+                  <DropdownItem onClick={() => changePenColor('red')}>
+                    <CircleIcon color="red" />
+                  </DropdownItem>
+                </Dropdown>
+              )}
+            </ToolContainer>
+          </SignatureContainer>
+          <ButtonContainer>
+            <WhiteButton onClick={clearSignature}>
+              <GrPowerReset />
+              다시 서명하기
+            </WhiteButton>
+            <BlueButton onClick={saveSignature}>
+              <FiPlus />
+              서명 등록하기
+            </BlueButton>
+          </ButtonContainer>
+        </MainArea>
+        <SideArea>
+          <SignatureList>
+            {savedSignatures.map((signature, index) => (
+              <SignatureItem key={index}>
+                <img src={signature} alt={`signature-${index}`} />
+              </SignatureItem>
+            ))}
+          </SignatureList>
+        </SideArea>
+      </Container>
+    </Background >
   );
 };
 

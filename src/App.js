@@ -7,6 +7,7 @@ import WorkPage from "./pages/work_page";
 import SignPage from "./pages/sign_page";
 import LandingPage from "./pages/landing_page";
 import PDFSignatureApp from "./pages/test_page";
+import PDFPage from "./pages/pdf_page";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/work" element={<WorkPage />} />
         <Route path="/sign" element={<SignPage />} />
         <Route path="/test" element={<PDFSignatureApp />} />
+        <Route path="/pdf" element={<PDFPage />} />
       </Route>
       <Route path="/" element={<LandingPage />} />
     </Routes >
