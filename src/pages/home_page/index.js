@@ -1,30 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Background from "../../components/Background";
 import Body from "../../components/Body";
 import { HiDotsVertical } from "react-icons/hi";
 import { FaRegCheckSquare } from "react-icons/fa";
-import { useEffect, useRef } from 'react';
 import axios from 'axios';
-
 
 const HomePage = () => {
   const PdfLogo = '/pdf-logo.png';
   const [showCheckboxes, setShowCheckboxes] = useState(false);
-  const [signatures, setSignatures] = useState([]);
+  const [pdfFiles, setPdfFiles] = useState([]);
 
   const toggleCheckboxes = () => {
     setShowCheckboxes(!showCheckboxes);
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/pdf")
-        .then(response => {
-            setSignatures(response.data);
-        })
-        .catch(error => {
-            console.error("There was an error fetching the images!", error);
-        });
+    axios.get("http://localhost:5000/PDF")
+      .then(response => {
+        setPdfFiles(response.data);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the PDF files!", error);
+      });
   }, []);
 
   return (
@@ -48,16 +46,19 @@ const HomePage = () => {
             <HeaderItem style={{ flex: 0.2 }}></HeaderItem>
           </FileListHeader>
           <FileList>
-            {Array.from({ length: 4 }).map((_, index) => (
-              <FileItem key={index}>
+            {pdfFiles.map(file => (
+              <FileItem key={file.id}>
                 {showCheckboxes && <Checkbox type="checkbox" />}
+
                 <FileName>
                   <PdfImage src={PdfLogo} alt='pdf' />
-                  근로계약서.pdf
+                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                    {file.name}
+                  </a>
                 </FileName>
-                <FileOwner>나</FileOwner>
-                <FileDate>2025. 05. 11. 12:28</FileDate>
-                <FileSize>224KB</FileSize>
+                <FileOwner>{file.owner}</FileOwner>
+                <FileDate>{file.date}</FileDate>
+                <FileSize>{file.size}</FileSize>
                 <MenuIconWrapper>
                   <HiDotsVertical color="#b0b0b0" />
                 </MenuIconWrapper>
